@@ -7,21 +7,27 @@ test('expect it to throw', () => {
 
 describe('addtition', () => {
     it('adding 0 makes no difference', () => {
-        fc.assert(fc.property(fc.integer(), number => {
-            return add(number, 0)===number && add(0, number)===number
-        }))
+        const property = number => {
+            return add(number, 0) === number && add(0, number) === number
+        };
+
+        fc.assert(fc.property(fc.integer(), property))
     })
 
     it('order makes no difference', () => {
-        fc.assert(fc.property(fc.integer(), fc.integer(), (x, y) => {
+        const property = (x, y) => {
             return add(x, y) === add(y, x)
-        }))
+        };
+
+        fc.assert(fc.property(fc.integer(), fc.integer(), property))
     })
 
     it('is additive', () => {
-        fc.assert(fc.property(fc.integer(), number => {
-            return add(number, 2) === add(add(number,1), 1)
-        }))
+        const property = number => {
+            return add(number, 2) === add(add(number, 1), 1)
+        };
+
+        fc.assert(fc.property(fc.integer(), property))
     })
 
 })
